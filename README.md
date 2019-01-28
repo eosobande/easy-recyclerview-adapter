@@ -134,7 +134,6 @@ OR if you decide to override the onItemClick method during instantiation
 
 6. Filter the recycler view
 ```java
-// to filter the list
     adapter.filter("Emmanuel");
 ```
 
