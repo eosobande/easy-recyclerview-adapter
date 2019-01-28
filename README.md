@@ -71,15 +71,15 @@ inflated from the layout resource designated in getLayoutRes
         return new ViewHolder(inflate(viewGroup)) {
             @Override
             public void onClick(View v) {
-                onItemClick(v, getDataInstance(i), i);
+                onItemClick(v, getItem(i), i);
             }
         };
     }
 ```
 NOTE: here we override the onClick method from our view holder because it was declared as abstract 
 and implements the View.OnClickListener interface. In order for the adapter class to handle click events on each item,
-it's onItemClick method is called inside the onClick method, passing the view, the data instance for the position, 
-and the position clicked on. getDataInstance method returns the model instance for the particular position.
+it's onItemClick method is called inside the onClick method, passing the view, the model instance for the position, 
+and the position clicked on. getItem method returns the model instance for the particular position.
 ```java
     abstract class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     
@@ -101,5 +101,40 @@ here using the search term (filter).
         return s.tolowercase().contains(filter);
     }
 ```
-3. 
+
+3. Instantiate the adapter class
+```java
+    NewAdapter adapter = new NewAdapter();
+```
+OR if you decide to override the onItemClick method during instantiation
+```java
+    NewAdapter adapter = new NewAdapter() {
+        @Override
+        public void onItemClick(View view, String s, int position) {
+            // do something with the string s
+        }
+    }
+```
+
+4. Assign the adapter to the recycler view
+```java
+    recyclerView.setAdapter(adapter)
+```
+
+5. Assign items
+```java
+// use the add or addAll methods to assign items to the recycler view
+	adapter.add("Emmanuel"); // add to end of list
+	adapter.add("Michael", 0); // add to position 0
+	adapter.replace("Rafael", 0); // change the item in a specific position
+	addAll(namesArrayList) // add a list of items
+	replaceAll(newNamesArrayList) // replace all items on list with new ones
+	remove(0); // remove item 0 from recycler view
+```
+
+6. Filter the recycler view
+```java
+// to filter the list
+    adapter.filter("Emmanuel");
+```
 
